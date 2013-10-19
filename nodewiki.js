@@ -64,6 +64,13 @@ while ((option = parser.getopt()) !== undefined) {
     }
     break;
 
+  case 'u':
+    // note: this means that the option u must come after option g
+    if (exports.gitMode) {
+      exports.gitAutoPush = true;
+    }
+    break;
+
   default:
     /* error message already emitted by getopt() */
     console.assert('?' == option.option);
@@ -83,6 +90,7 @@ function showUsage() {
     'usage: nodewiki [--addr=<addr> | --local] [--git] [--help] [--port=<portnumber>]\n',
     '  -a | --addr   IPv4 listen address (default = any)\n',
     '  -g | --git    Commit each save to a git repository\n',
+    '  -u            Push each commit made to remote\n',
     '  -h | --help   Print this message\n',
     '  -l | --local  Listen on "localhost" (127.0.0.1) only.\n',
     '  -p | --port   Use the specified port'
