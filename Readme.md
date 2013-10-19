@@ -16,6 +16,7 @@ automatically does a git commit on each file save.
 
     npm install nodewiki -g
 
+
 ## Usage
 
     nodewiki [options]
@@ -34,32 +35,29 @@ If your computer is connected to a network, then the `--local` option is
 highly recommended.
 
 
-###Options
-`-a <IPv4_addr>`  
-`--addr=<IPv4_addr>`  
-`--addr <IPv4_addr>`  
-Listen only on IPv4_addr. The listen address can also be specified by defining NW_ADDR in the environment.
+### Options
+`-a <IPv4_addr>`
+`--addr=<IPv4_addr>`
+`--addr <IPv4_addr>`
+Listen only on `<IPv4_addr>`. The listen address can also be specified by defining `NW_ADDR` in the environment.
 
-`-l`  
-`--local`  
+`-l`
+`--local`
 Listen on localhost only. This is equivalent to `--addr=127.0.0.1`.
 
-`-g`  
-`--git`  
-`git` (depricated)  
+`-g`
+`--git`
 Commit each save to a git repository.
 
-`-h`  
-`--help`  
-`help` (depricated)  
+`-h`
+`--help`
 Display a short help message.
 
-`-p <port>`  
-`--port=<port>`  
-`--port <port>`  
-`<port>` (depricated)  
+`-p <port>`
+`--port=<port>`
+`--port <port>`
 Listen on `<port>` rather than 8888. The default port can be changed
-from 8888 by setting the PORT environment variable.
+from 8888 by setting the `PORT` environment variable.
 
 ### Examples
 
