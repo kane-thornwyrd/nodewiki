@@ -29,8 +29,11 @@ while ((option = parser.getopt()) !== undefined) {
     break;
 
   case 'g':
-    if (fs.existsSync(process.cwd() + '/.git')){
+    if (fs.existsSync && fs.existsSync(process.cwd() + '/.git')){
       exports.gitMode = true;
+    } else if (!fs.existsSync) {
+      console.log('ERROR: You are using an outdated version of nodejs\n';)
+      process.exit(1);
     } else {
       console.log(
         'ERROR: No git repository found\n',
@@ -46,11 +49,6 @@ while ((option = parser.getopt()) !== undefined) {
     break;
 
   case 'l':
-    if (listenAddr != "") {
-      console.log("ERROR: Conflicting use of --addr and --local.\n",
-                  "Use only one.");
-      process.exit(1);
-    }
     listenAddr = "localhost";
     break;
 
@@ -97,30 +95,6 @@ function showUsage() {
     );
 }
 
-/*
- * For backwards compatibility, handle argument style (no '--' or '-')
- * options. Implmented for original options only: git, help, and <portNum>.
- */
-for (var argn = parser.optind();
-     argn < process.argv.length;
-     argn++) {
-  var arg = process.argv[argn];
-
-  if (arg == "git") {
-    exports.gitMode = true;
-  } else if (arg == "help") {
-    showHelp();
-    process.exit(1);
-  } else if (typeof parseInt(arg) == 'number' && (arg = parseInt(arg)) > 0) {
-    if (portNumber != portNumberDefault) {
-      console.log("WARNING: Overriding previous port number, %d", portNumber);
-    }
-    portNumber = arg;
-  } else {
-    console.log("WARNING: Unknown argument: %s", arg);
-  }
-}
-  
 // end of command line processing
 
 var app = connect();
