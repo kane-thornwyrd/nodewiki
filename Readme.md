@@ -49,6 +49,9 @@ Listen on localhost only. This is equivalent to `--addr=127.0.0.1`.
 `--git`
 Commit each save to a git repository.
 
+`-u`
+Push each commit automatically default remote.
+
 `-h`
 `--help`
 Display a short help message.
