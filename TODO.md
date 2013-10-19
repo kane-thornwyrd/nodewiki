@@ -5,6 +5,7 @@
    - have the ability to delete files and folders
    - maybe have a better markdown editor
    - create public API
+   - add unit tests
 
 ## BUGS
 

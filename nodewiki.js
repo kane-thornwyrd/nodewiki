@@ -32,7 +32,7 @@ while ((option = parser.getopt()) !== undefined) {
     if (fs.existsSync && fs.existsSync(process.cwd() + '/.git')){
       exports.gitMode = true;
     } else if (!fs.existsSync) {
-      console.log('ERROR: You are using an outdated version of nodejs\n';)
+      console.log('ERROR: You are using an outdated version of nodejs\n');
       process.exit(1);
     } else {
       console.log(
