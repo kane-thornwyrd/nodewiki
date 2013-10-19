@@ -1,9 +1,9 @@
-#Node Wiki
+# Node Wiki
 
-A simple git based wiki system for markdown files written in node.js.
+A simple git-based, markdown wiki system written in node.js.
 
-[![screenshot](https://raw.github.com/nhoss2/nodewiki/d02b3596876d712f839f027204f6c488c8d90f42/static/screenshot.jpg)](http://github.com/nhoss2/nodewiki)
-##What it does
+[![screenshot](https://raw.github.com/benhutchins/nodewiki/master/static/screenshot.jpg)](http://github.com/benhutchins/nodewiki)
+## What it does
 
 This is a simple wiki system that uses markdown (text) files as its
 database. It reads and writes to the text files in the directory it was
@@ -15,9 +15,6 @@ automatically does a git commit on each file save.
 ## Install
 
     npm install nodewiki -g
-
-*note: you may need sudo*
-
 
 ## Usage
 
@@ -61,10 +58,10 @@ Display a short help message.
 `--port=<port>`  
 `--port <port>`  
 `<port>` (depricated)  
-Listen on <port> rather than 8888. The default port can be changed
+Listen on `<port>` rather than 8888. The default port can be changed
 from 8888 by setting the PORT environment variable.
 
-###Examples
+### Examples
 
 `nodewiki`  
 Starts node wiki
