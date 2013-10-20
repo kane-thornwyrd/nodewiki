@@ -1,6 +1,6 @@
 # Node Wiki
 
-A simple git-based, markdown wiki system written in node.js.
+A simple git powered markdown wiki written in node.js
 
 [![screenshot](https://raw.github.com/benhutchins/nodewiki/master/static/screenshot.jpg)](http://github.com/benhutchins/nodewiki)
 ## What it does
