@@ -1,0 +1,72 @@
+### Bold
+    **txt**
+     Ctrl / Cmd + B
+
+### Emphasize
+    __text__
+    Ctrl / Cmd + I
+
+### Inline Code
+    `code`
+    Cmd + K / Ctrl + Shift + K
+
+### Strike-through
+    ~~text~~
+    Ctrl + Alt + U
+
+### Link
+    [title](http://)
+    Ctrl + Shift + L
+
+### Image
+    ![alt](http://)
+    Ctrl + Shift + I
+
+### List
+    * item
+    Ctrl + L
+
+### Blockquote
+    > quote
+    Ctrl + Q
+
+### H1
+    # Heading
+    Ctrl + Alt + 1
+
+### H2
+    ## Heading
+    Ctrl + Alt + 2
+
+#### H3
+    ### Heading
+    Ctrl + Alt + 3
+
+### H4
+    #### Heading
+    Ctrl + Alt + 4
+
+### H5
+    ##### Heading
+    Ctrl + Alt + 5
+
+### H6
+    ###### Heading
+    Ctrl + Alt + 6
+
+### Select Word
+    Ctrl + Alt + W
+
+### Uppercase
+    Ctrl + U
+
+### Lowercase
+    Ctrl + Shift + U
+
+### Titlecase
+    Ctrl + Alt + Shift + U
+
+### Insert Current Date
+    Ctrl + Shift + 1
+
+For further Markdown syntax reference: [Markdown Documentation](http://daringfireball.net/projects/markdown/syntax)

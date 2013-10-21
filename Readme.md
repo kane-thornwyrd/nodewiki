@@ -2,7 +2,6 @@
 
 A simple git powered markdown wiki written in node.js
 
-[![screenshot](https://raw.github.com/benhutchins/nodewiki/master/static/screenshot.jpg)](http://github.com/benhutchins/nodewiki)
 ## What it does
 
 This is a simple wiki system that uses markdown (text) files as its
