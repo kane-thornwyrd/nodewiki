@@ -1,36 +1,132 @@
 <!doctype html>
-<html>
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if (gte IE 9)| IEMobile |!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
-  <title>Node Wiki</title>
-  <link rel="stylesheet" type="text/css" href="design/css.css">
-  <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-  <script type="text/javascript" src="/jquery.js"></script>
-  <script type="text/javascript" src="/socketio.js"></script>
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="csrf-param" content="A9vJSjdtMKp52N8hpiVeyjwF">
+
+	<title>Node Wiki</title>
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta http-equiv="cleartype" content="on">
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="/assets/css/screen.css">
+	<!-- <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"> -->
+	<script type="text/javascript" src="/assets/vendor/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/assets/js/lib/jquery-utils.js"></script>
+	<script type="text/javascript" src="/assets/vendor/underscore.js"></script>
+	<script type="text/javascript" src="/assets/vendor/backbone.js"></script>
+	<script type="text/javascript" src="/assets/vendor/moment.js"></script>
+	<script type="text/javascript" src="/assets/vendor/shortcuts.js"></script>
+	<script type="text/javascript" src="/assets/vendor/codemirror/codemirror.js"></script>
+	<script type="text/javascript" src="/assets/vendor/codemirror/mode/markdown/markdown.js"></script>
+	<script type="text/javascript" src="/assets/vendor/codemirror/mode/xml/xml.js"></script>
+	<script type="text/javascript" src="/assets/vendor/codemirror/mode/gfm/gfm.js"></script>
+	<script type="text/javascript" src="/assets/vendor/codemirror/addon/mode/overlay.js"></script>
+	<script type="text/javascript" src="/assets/vendor/showdown/showdown.js"></script>
+	<script type="text/javascript" src="/assets/vendor/showdown/extensions/ghostdown.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 </head>
-<body>
+<body class="manage">
+	<header id="global-header" class="navbar">
+		<nav id="global-nav" role="navigation">
+			<ul id="main-menu">
+				<li class="content active"><a href="/">Content</a></li>
+				<li class="editor"><a href="#" data-action="create">New Post</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main role="main" id="main">
+		<aside id="notifications"></aside>
 
-  <div id="back">
-    <div id="content">
-      <div id="content_header">
-        <h1>Node Wiki</h1>
-        <div id="edit_save_buttons">
-        </div>
-      </div>
-      <div id="notification"></div>
-      <div id="markdown_content">
+		<section class="content-view-container">
+			<section class="content-list js-content-list">
+				<header class="floatingheader">
+					<section class="content-filter">
+						<span>All Files</span>
+					</section>
+					<a href="#" data-action="create" class="button button-add"><span class="hidden">New Post</span></a>
+				</header>
+				<section class="content-list-content">
+					<ol></ol>
+				</section>
+			</section>
 
-        <noscript>Sorry you need javascript for this application to work</noscript>
+			<section class="content-preview js-content-preview">
+				<section class="content-preview-content">
+					<div class="wrapper">
+						<p>Click on a file on the left to open it</p>
+					</div>
+				</section>
+			</section>
+		</section>
 
-        <p>Click on a file on the left to open it</p>
-      </div>
-    </div>
-    <div id="navigation">
-      <code>Loading...</code>
-    </div>
-  </div>
+		<section class="entry-container hidden">
+			<header>
+				<section class="box entry-title">
+					<input type="text" id="entry-title" placeholder="Markdown file name" tabindex="1" disabled>
+				</section>
+			</header>
 
+			<section class="entry-markdown active">
+				<header class="floatingheader">
+					Markdown
+					<a class="markdown-help" href="https://github.com/benhutchins/nodewiki/wiki/Markdown-Editor-Shortcuts" target="_blank"><span class="hidden">What is Markdown?</span></a>
+				</header>
+				<section class="entry-markdown-content">
+					<textarea id="entry-markdown"></textarea>
+				</section>
+			</section>
+
+			<section class="entry-preview">
+				<header class="floatingheader">
+					Preview <span class="entry-word-count js-entry-word-count">0 words</span>
+				</header>
+				<section class="entry-preview-content">
+					<div class="rendered-markdown"></div>
+				</section>
+			</section>
+		</section>
+
+		<footer id="publish-bar" class="hidden">
+			<nav>
+				<section id="entry-tags" href="#" class="left">
+					<label class="tag-label" for="tags"><span class="hidden">Tags</span></label>
+					<div class="tags"></div>
+					<input type="hidden" class="tags-holder" id="tags-holder">
+					<input class="tag-input" id="tags" type="text" data-input-behaviour="tag" placeholder="commit message" />
+					<ul class="suggestions overlay"></ul>
+				</section>
+				<div class="right">
+					<section id="entry-actions" class="js-publish-splitbutton splitbutton-save">
+						<button type="button" class="js-publish-button button-save">Save</button>
+						<a class="options up" data-toggle="ul" href="#"><span class="hidden">Options</span></a>
+						<ul class="editor-options overlay" style="display:none">
+							<li><a href="#">Delete</a></li>
+						</ul>
+					</section>
+				</div>
+			</nav>
+		</footer>
+	</main>
+	<script type="text/javascript" src="/assets/js/init.js"></script>
+	<script type="text/javascript" src="/assets/js/views/base.js"></script>
+	<script type="text/javascript" src="/assets/js/views/notifications.js"></script>
+	<script type="text/javascript" src="/assets/js/models/entry.js"></script>
+	<script type="text/javascript" src="/assets/js/views/entry.js"></script>
+	<script type="text/javascript" src="/assets/js/views/content-list.js"></script>
+	<script type="text/javascript" src="/assets/js/collections/entries.js"></script>
+	<script type="text/javascript" src="/assets/js/views/editor.js"></script>
+	<script type="text/javascript" src="/assets/js/views/app.js"></script>
+	<script type="text/javascript" src="/assets/js/views/home.js"></script>
+	<script type="text/javascript" src="/assets/js/views/settings-panel.js"></script>
+	<script type="text/javascript" src="/assets/js/router.js"></script>
+	<script type="text/javascript" src="/assets/js/toggle.js"></script>
+	<script type="text/javascript" src="/assets/js/responsive.js"></script>
+	<script type="text/javascript">Wiki.init();</script>
 </body>
 </html>

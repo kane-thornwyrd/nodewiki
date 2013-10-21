@@ -4,4 +4,6 @@ npm-debug.log
 *.swp
 *.sublime-project
 *.sublime-workspace
+static/assets/js/*.min.js
+static/assets/css/screen.css
 sftp-config.json

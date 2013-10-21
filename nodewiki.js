@@ -18,7 +18,7 @@ var portNumber = portNumberDefault;
 
 // Process command line
 var parser, option;
-parser = new mod_getopt.BasicParser('a:(addr)g(git)h(help)l(local)p:(port)', process.argv);
+parser = new mod_getopt.BasicParser('a:(addr)g(git)h(help)l(local)p:(port)u', process.argv);
 
 while ((option = parser.getopt()) !== undefined) {
 
@@ -111,93 +111,53 @@ io = socketio.listen(server);
 io.set('log level', 2);
 
 io.sockets.on('connection', function (socket){
-  var currentPath = process.cwd() + '/';
-  getDir.getDir(currentPath, function(dir){
-    var links = getDir.parseLinks(dir);
-    var directoryDepth = 0;
+  var path = process.cwd() + '/';
+  getDir.getDir(path, function (files) {
+    // send the list of files
+    socket.emit('files', files);
 
-    var dirFolders = []; // array to hold the names of all folders in current directory
-    dir.forEach(function(i){
-      if (i.folder == true){
-        dirFolders.push(i.name);
-      }
+    // now load up more details on the files
+    // getDir
+
+    // open a file
+    socket.on('open', function (file) {
+      console.log('open received - ' + file.name);
+      mdserver.sendFile(file, path, socket);
     });
-    socket.emit('navLinks', {links: links});
 
-    socket.on('readFile', function(file){
-      console.log('readFile received - ' + file.name);
-      if(dirFolders.indexOf(file.name) > -1){ // checks if request is in the dirFolders array (meaning that the request is for a folder)
-        currentPath += file.name;
-        refreshDir(function(){
-          directoryDepth += 1;
-          links = getDir.parseLinks(dir, directoryDepth);
-          mdserver.readFolder(currentPath, links, socket);
-        });
-      } else {
-        mdserver.sendFile(file, currentPath, socket);
-      }
+    // open a folder
+    socket.on('dir', function (folder) {
+      console.log('ls received - ' + folder.name);
+      var currentPath = path + folder.name;
+
+      getDir.getDir(currentPath, function (files) {
+        socket.emit('dirReply', {path: currentPath, files: files});
+      });
     });
 
     socket.on('disconnect', function(){
       // if a user disconnects, reinitialise variables
-      var currentPath = process.cwd() + '/';
-      refreshDir(function(){
-        var links = getDir.parseLinks(dir);
-        var directoryDepth = 0;
-      });
+      // var path = process.cwd() + '/';
+      // refreshDir(function(){
+      //   var links = getDir.parseLinks(dir);
+      //   var directoryDepth = 0;
+      // });
     });
 
     socket.on('saveFile', function (file){
-      console.log('saveFile recieved, name: ' + file.name + ', alias: ' + file.alias);
+      console.log('saveFile recieved, name: ' + file.name);
       mdserver.saveFile(file, currentPath, socket);
     });
 
-    socket.on('goBackFolder', function(){
-      if (directoryDepth > 0){
-        // removes current directory form the currentPath variable
-        currentPath = currentPath.substr(0, currentPath.substr(0, currentPath.length - 1).lastIndexOf('/')) + '/';
-        refreshDir(function(){
-          directoryDepth -= 1;
-          links = getDir.parseLinks(dir, directoryDepth);
-          mdserver.readFolder(currentPath, links, socket);
-        });
-      }
-    });
-
-    socket.on('refreshNav', function(){
-      refreshNavLinks();
-    });
-
-    socket.on('newFolder', function(folderName){
-      fs.mkdir(currentPath + folderName, 0777, function(err){
-        if (err){
-          socket.emit('newFolderReply', err);
+    socket.on('mkdir', function (folderName) {
+      fs.mkdir(path + folderName, 0777, function(err){
+        if (err) {
+          socket.emit('mkdirReply', err);
         } else {
-          refreshNavLinks();
+          // refreshNavLinks();
         }
       });
     });
-
-    function refreshNavLinks(){
-      refreshDir(function(){
-        links = getDir.parseLinks(dir, directoryDepth);
-        socket.emit('navLinks', {links: links});
-      });
-    }
-
-    function refreshDir(cb){
-      getDir.getDir(currentPath, function(newDir){
-        dir = newDir;
-        if (typeof dir != 'undefined'){
-          dir.forEach(function(i){
-            if (i.folder == true){
-              dirFolders.push(i.name);
-            }
-          });
-        }
-        cb();
-      });
-    }
   });
 });
 if (exports.gitMode == true) {
