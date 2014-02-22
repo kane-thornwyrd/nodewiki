@@ -117,7 +117,13 @@ io.sockets.on('connection', function (socket){
     socket.emit('files', files);
 
     // now load up more details on the files
-    // getDir
+    console.log('about to try and getDetails');
+    getDir.getDetails(path, files, function (err, fileDetails) {
+      console.log('in callback for getDetails', files, arguments);
+      if (!err) {
+        socket.emit('fileDetails', fileDetails);
+      }
+    });
 
     // open a file
     socket.on('open', function (file) {

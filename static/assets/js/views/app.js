@@ -1,11 +1,12 @@
 Wiki.Views.Socket = Backbone.View.extend({
 
 	initialize: function(data) {
-		_.bindAll(this, 'socketFiles', 'socketOpen', 'socketDir', 'saveFileReply', 'socketMkdir');
+		_.bindAll(this, 'socketFiles', 'socketFileDetails', 'socketOpen', 'socketDir', 'saveFileReply', 'socketMkdir');
 
 		this.socket = io.connect();
 
 		this.socket.on('files', this.socketFiles);
+		this.socket.on('fileDetails', this.socketFileDetails);
 		this.socket.on('openReply', this.socketOpen);
 		this.socket.on('dirReply', this.socketDir);
 		this.socket.on('saveFileReply', this.saveFileReply);
@@ -25,6 +26,14 @@ Wiki.Views.Socket = Backbone.View.extend({
 	socketFiles: function (files) {
 		this.collection.add(files);
 		this.trigger('socket:files');
+	},
+
+	// meta data for files
+	socketFileDetails: function (fileDetails) {
+		_.each(fileDetails, function (details) {
+			var model = this.collection.get(details.id);
+			model.meta(details);
+		}, this);
 	},
 
 	// open a file by a model

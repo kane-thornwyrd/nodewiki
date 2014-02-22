@@ -63,18 +63,17 @@
 			Backbone.trigger('wiki:activeItem', item.data('id'));
 		},
 
-		template: _.template('<a class="permalink featured" href="/w/<%= name %>"><h3 class="entry-title"><%= name %></h3></a>')
-
-		//  '<a class="permalink{{#if featured}} featured{{/if}}" href="/w/<%= name %>">\
-		//    <h3 class="entry-title"><%= name %></h3>\
-		//    <section class="entry-meta">\
-		//      <time datetime="<%= mtime %>" class="date">\
-		//        Updated <%= mtime_h %>\
-		//      </time>\
-		//      <span title="revisions" class="views"><%= revisions %></span>\
-		//    </section>\
-		//  </a>'
-		// )
+		template: _.template(
+			'<a class="permalink<% if (typeof featured !== \'undefined\') { %> featured<% } %>" href="/w/<%= name %>">' +
+				'<h3 class="entry-title"><%= name %></h3>' +
+				'<% if (revisions != null) { %>' +
+					'<section class="entry-meta">' +
+						'<% if (typeof mtime !== \'undefined\') { %><time datetime="<%= mtime %>" class="date">Updated <%= mtime_h %></time><% } %>' +
+						'<span title="revisions" class="views"><%= revisions %></span>' +
+					'</section>' +
+				'<% } %>' +
+			'</a>'
+		)
 	});
 
 })();

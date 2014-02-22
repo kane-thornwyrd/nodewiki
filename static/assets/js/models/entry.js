@@ -13,7 +13,7 @@
 				html: null,
 				mtime: null,
 				mtime_h: null,
-				revisions: 1,
+				revisions: null,
 				markdown: null,
 				status: 'draft'
 				// author: ''
