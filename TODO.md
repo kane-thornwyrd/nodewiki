@@ -1,11 +1,21 @@
-## TODO
+## TODO (modified by Kane)
 
-   - have the ability to link to other files
-   - have an alert that asks if user wants to save changes when they navigate away
-   - have the ability to delete files and folders
-   - maybe have a better markdown editor
-   - create public API
-   - add unit tests
+### Priority 0
+   - Alert on unsaved changes when navigate away.
+   - Delete files and folders.
+   - Better markdown editor.
+
+### Priority 1
+   - Ability to crosslink files.
+   - Some code highlighting library for the rendered pages.
+   - Unit testing.
+   - Public API.
+
+### Priority 2
+   - Decouple the design to be themeable.
+
+### Priority 3
+   - Improve the design.
 
 ## BUGS
 
