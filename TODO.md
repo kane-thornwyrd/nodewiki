@@ -1,9 +1,10 @@
 ## TODO (modified by Kane)
 
 ### Priority 0
+   - Modularize using Require.js.
    - Alert on unsaved changes when navigate away.
    - Delete files and folders.
-   - Better markdown editor.
+   - Better markdown editor. (ACE ?)
 
 ### Priority 1
    - Ability to crosslink files.
